@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useParams } from "react-router-dom";
 import CreateTaskDialog from "../task/create-task-dialog";
 import EditProjectDialog from "./edit-project-dialog";
@@ -7,11 +6,11 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { getProjectByIdQueryFn } from "@/lib/api";
 import PermissionsGuard from "@/components/resuable/permission-guard";
 import { Permissions } from "@/constant";
-
+import { useAuthContext } from "@/context/auth-provider";
 const ProjectHeader = () => {
   const param = useParams();
   const projectId = param.projectId as string;
-
+  const { hasPermission } = useAuthContext();
   const workspaceId = useWorkspaceId();
 
   const { data, isPending, isError } = useQuery({
@@ -44,15 +43,19 @@ const ProjectHeader = () => {
   };
   return (
     <div className="flex items-center justify-between space-y-2">
-      <div className="flex items-center gap-2">
+      <div className="flex flex-row items-center gap-2">
         <h2 className="flex items-center gap-3 text-xl font-medium truncate tracking-tight">
           {renderContent()}
         </h2>
-        <PermissionsGuard requiredPermission={Permissions.EDIT_PROJECT}>
-          <EditProjectDialog project={project} />
-        </PermissionsGuard>
+        <div>
+          <PermissionsGuard requiredPermission={Permissions.EDIT_PROJECT}>
+            <EditProjectDialog project={project} />
+          </PermissionsGuard>
+        </div>
+        {hasPermission(Permissions.CREATE_TASK) && (
+          <CreateTaskDialog projectId={projectId} />
+        )}
       </div>
-      <CreateTaskDialog projectId={projectId} />
     </div>
   );
 };
