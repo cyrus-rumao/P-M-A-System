@@ -12,14 +12,14 @@ export const googleLoginCallback = asyncHandler(
     console.log("Current Workspace:", currentWorkspace);
     if (!currentWorkspace) {
       return res.redirect(
-        `${config.FRONTEND_GOOGLE_CALLBACK_URL}?status=failure`
+        `${config.FRONTEND_GOOGLE_CALLBACK_URL}?status=failure`,
       );
     }
 
     return res.redirect(
-      `${config.FRONTEND_ORIGIN}/workspace/${currentWorkspace}`
+      `${config.FRONTEND_ORIGIN}/workspace/${currentWorkspace}`,
     );
-  }
+  },
 );
 
 export const registerUserController = asyncHandler(
@@ -33,7 +33,7 @@ export const registerUserController = asyncHandler(
     return res.status(HTTPSTATUS.CREATED).json({
       message: "User created successfully",
     });
-  }
+  },
 );
 
 export const loginController = asyncHandler(
@@ -43,12 +43,11 @@ export const loginController = asyncHandler(
       (
         err: Error | null,
         user: Express.User | false,
-        info: { message: string } | undefined
+        info: { message: string } | undefined,
       ) => {
         if (err) {
           return next(err);
         }
-
         if (!user) {
           return res.status(HTTPSTATUS.UNAUTHORIZED).json({
             message: info?.message || "Invalid email or password",
@@ -65,9 +64,9 @@ export const loginController = asyncHandler(
             user,
           });
         });
-      }
+      },
     )(req, res, next);
-  }
+  },
 );
 
 export const logOutController = asyncHandler(
@@ -85,5 +84,5 @@ export const logOutController = asyncHandler(
     return res
       .status(HTTPSTATUS.OK)
       .json({ message: "Logged out successfully" });
-  }
+  },
 );

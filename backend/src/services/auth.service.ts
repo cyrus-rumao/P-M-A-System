@@ -11,7 +11,6 @@ import {
 } from "../utils/appError";
 import MemberModel from "../models/member.model";
 import { ProviderEnum } from "../enums/account-provider.enum";
-
 export const loginOrCreateAccountService = async (data: {
   provider: string;
   displayName: string;

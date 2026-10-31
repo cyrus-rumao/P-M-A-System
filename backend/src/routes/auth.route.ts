@@ -21,15 +21,15 @@ authRoutes.get(
   "/google",
   passport.authenticate("google", {
     scope: ["profile", "email"],
-  })
-);
+  }),
+);  
 
 authRoutes.get(
   "/google/callback",
   passport.authenticate("google", {
     failureRedirect: failedUrl,
   }),
-  googleLoginCallback
+  googleLoginCallback,
 );
 
 export default authRoutes;

@@ -11,7 +11,7 @@ export const createProjectService = async (
     emoji?: string;
     name: string;
     description?: string;
-  }
+  },
 ) => {
   const project = new ProjectModel({
     ...(body.emoji && { emoji: body.emoji }),
@@ -29,7 +29,7 @@ export const createProjectService = async (
 export const getProjectsInWorkspaceService = async (
   workspaceId: string,
   pageSize: number,
-  pageNumber: number
+  pageNumber: number,
 ) => {
   // Step 1: Find all projects in the workspace
 
@@ -54,7 +54,7 @@ export const getProjectsInWorkspaceService = async (
 
 export const getProjectByIdAndWorkspaceIdService = async (
   workspaceId: string,
-  projectId: string
+  projectId: string,
 ) => {
   const project = await ProjectModel.findOne({
     _id: projectId,
@@ -63,7 +63,7 @@ export const getProjectByIdAndWorkspaceIdService = async (
 
   if (!project) {
     throw new NotFoundException(
-      "Project not found or does not belong to the specified workspace"
+      "Project not found or does not belong to the specified workspace",
     );
   }
 
@@ -72,13 +72,13 @@ export const getProjectByIdAndWorkspaceIdService = async (
 
 export const getProjectAnalyticsService = async (
   workspaceId: string,
-  projectId: string
+  projectId: string,
 ) => {
   const project = await ProjectModel.findById(projectId);
 
   if (!project || project.workspace.toString() !== workspaceId.toString()) {
     throw new NotFoundException(
-      "Project not found or does not belong to this workspace"
+      "Project not found or does not belong to this workspace",
     );
   }
 
@@ -139,7 +139,7 @@ export const updateProjectService = async (
     emoji?: string;
     name: string;
     description?: string;
-  }
+  },
 ) => {
   const { name, emoji, description } = body;
 
@@ -150,7 +150,7 @@ export const updateProjectService = async (
 
   if (!project) {
     throw new NotFoundException(
-      "Project not found or does not belong to the specified workspace"
+      "Project not found or does not belong to the specified workspace",
     );
   }
 
@@ -165,7 +165,7 @@ export const updateProjectService = async (
 
 export const deleteProjectService = async (
   workspaceId: string,
-  projectId: string
+  projectId: string,
 ) => {
   const project = await ProjectModel.findOne({
     _id: projectId,
@@ -174,7 +174,7 @@ export const deleteProjectService = async (
 
   if (!project) {
     throw new NotFoundException(
-      "Project not found or does not belong to the specified workspace"
+      "Project not found or does not belong to the specified workspace",
     );
   }
 
