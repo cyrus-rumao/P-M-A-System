@@ -34,6 +34,7 @@ export const getAvatarColor = (initials: string): string => {
   ];
 
   // Simple hash to map initials to a color index
+  console.log("HAsh : ", initials);
   const hash = initials
     .split("")
     .reduce((acc, char) => acc + char.charCodeAt(0), 0);
